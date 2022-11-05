@@ -1,0 +1,17 @@
+name: Rust Release
+inputs:
+  name:
+    description: Set name
+  version:
+    description: Set version
+  path:
+    description: Set path
+  target:
+    description: Set target
+  files:
+    description: Set files
+  manual-licenses-path:
+    description: Set manual licenses path
+runs:
+  using: node16
+  main: index.js
