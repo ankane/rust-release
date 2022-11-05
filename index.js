@@ -18,11 +18,7 @@ function runOptions(options, command, ...args) {
 }
 
 function capture(command, ...args) {
-  const ret = spawnSync(command, args, {stdio: ['pipe', 'pipe', 'inherit']});
-  if (ret.status !== 0) {
-    throw `Bad status: ${ret.status}`;
-  }
-  return ret.stdout;
+  return spawnSync(command, args, {stdio: ['pipe', 'pipe', 'inherit']}).stdout;
 }
 
 function isMac() {
