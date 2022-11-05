@@ -38,13 +38,24 @@ let version = process.env['INPUT_VERSION'];
 const appPath = process.env['INPUT_PATH'];
 const target = process.env['INPUT_TARGET'];
 
-if (target == 'aarch64-unknown-linux-gnu') {
-  run('sudo', 'apt', 'update');
-  run('sudo', 'apt', 'install', 'gcc-aarch64-linux-gnu');
-  process.env['CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER'] = 'aarch64-linux-gnu-gcc';
-}
+let cross = process.env['INPUT_CROSS'] == 'true' && target.includes('linux');
 
-run('rustup', 'target', 'add', target);
+let command;
+if (cross) {
+  runOptions({cwd: '/tmp'}, 'wget', '-q', 'https://github.com/cross-rs/cross/releases/download/v0.2.4/cross-x86_64-unknown-linux-gnu.tar.gz');
+  runOptions({cwd: '/tmp'}, 'tar', 'xzf', 'cross-x86_64-unknown-linux-gnu.tar.gz');
+  command = '/tmp/cross';
+} else {
+  // TODO support more targets
+  if (target == 'aarch64-unknown-linux-gnu') {
+    run('sudo', 'apt', 'update');
+    run('sudo', 'apt', 'install', 'gcc-aarch64-linux-gnu');
+    process.env['CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER'] = 'aarch64-linux-gnu-gcc';
+  }
+
+  run('rustup', 'target', 'add', target);
+  command = 'cargo';
+}
 
 if (appPath) {
   process.chdir(appPath);
@@ -52,7 +63,7 @@ if (appPath) {
 
 // TODO support features
 // TODO use --out-dir when stable
-run('cargo', 'build', '--release', '--target', target);
+run(command, 'build', '--release', '--target', target);
 
 const metadata = JSON.parse(capture('cargo', 'metadata', '--format-version', '1', '--no-deps'));
 const package = metadata['packages'][0];

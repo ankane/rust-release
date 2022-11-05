@@ -1,5 +1,7 @@
 name: Rust Release
 inputs:
+  cross:
+    description: Use cross for Linux targets
   name:
     description: Set name
   version:
