@@ -1,7 +1,5 @@
 name: Rust Release
 inputs:
-  cross:
-    description: Use cross for Linux targets
   name:
     description: Set name
   version:
@@ -10,6 +8,8 @@ inputs:
     description: Set path
   target:
     description: Set target
+  cross:
+    description: Use cross for Linux targets
   files:
     description: Set files
   manual-licenses-path:
