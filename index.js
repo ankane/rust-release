@@ -46,7 +46,6 @@ if (target == 'aarch64-unknown-linux-gnu') {
 
 run('rustup', 'target', 'add', target);
 
-const cwd = process.cwd();
 if (appPath) {
   process.chdir(appPath);
 }
@@ -128,8 +127,6 @@ if (manualLicensesPath) {
   const manualLicenses = fs.readFileSync(manualLicensesPath);
   fs.appendFileSync(thirdPartyPath, manualLicenses);
 }
-
-process.chdir(cwd);
 
 const artifactExt = isWindows() ? 'zip' : 'tar.gz';
 const artifactName = `${name}-${version}-${target}.${artifactExt}`;
