@@ -76,8 +76,7 @@ if (!version) {
 }
 
 const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'release-'));
-const unarchiveName = `${name}-${version}`;
-const dir = path.join(tempDir, unarchiveName);
+const dir = path.join(tempDir, 'artifact');
 fs.mkdirSync(dir);
 
 for (let t of package.targets) {
@@ -144,9 +143,9 @@ const artifactName = `${name}-${version}-${target}.${artifactExt}`;
 const artifactPath = path.join(tempDir, artifactName);
 
 if (isWindows()) {
-  runOptions({'shell':'powershell.exe'}, 'Compress-Archive', '-Path', dir, '-DestinationPath', artifactPath);
+  runOptions({'shell':'powershell.exe'}, 'Compress-Archive', '-Path', dir, '-DestinationPath', artifactPath, '*');
 } else {
-  run('tar', 'czf', artifactPath, '-C', tempDir, unarchiveName);
+  run('tar', 'czf', artifactPath, '-C', dir, '*');
 }
 
 addOutput('artifact-name', artifactName);
