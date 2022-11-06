@@ -144,6 +144,8 @@ const artifactName = `${name}-${version}-${target}.${artifactExt}`;
 const artifactPath = path.join(tempDir, artifactName);
 
 if (isWindows()) {
+  // use 7z over Compress-Archive to fix
+  // archive "appears to use backslashes as path separators" warning/error
   run('7z', 'a', artifactPath, dir);
 } else {
   run('tar', 'czf', artifactPath, '-C', tempDir, unarchiveName);
