@@ -143,9 +143,9 @@ const artifactName = `${name}-${version}-${target}.${artifactExt}`;
 const artifactPath = path.join(tempDir, artifactName);
 
 if (isWindows()) {
-  runOptions({'shell':'powershell.exe'}, 'Compress-Archive', '-Path', dir, '-DestinationPath', artifactPath, '*');
+  runOptions({'shell': 'powershell.exe'}, 'Compress-Archive', '-Path', dir, '-DestinationPath', `${artifactPath}\\*`);
 } else {
-  run('tar', 'czf', artifactPath, '-C', dir, '*');
+  runOptions({'shell': 'bash'}, 'tar', 'czf', artifactPath, '-C', dir, '*');
 }
 
 addOutput('artifact-name', artifactName);
