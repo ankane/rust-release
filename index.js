@@ -140,7 +140,7 @@ const artifactName = `${name}-${version}-${target}.${artifactExt}`;
 const artifactPath = path.join(tempDir, artifactName);
 
 if (isWindows()) {
-  runOptions({'shell':'powershell.exe'}, 'Compress-Archive', '-Path', dir, '-DestinationPath', artifactPath);
+  run('7z', 'a', artifactPath, dir);
 } else {
   run('tar', 'czf', artifactPath, '-C', tempDir, unarchiveName);
 }
