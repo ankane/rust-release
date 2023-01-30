@@ -129,7 +129,7 @@ if (package.dependencies.length > 0) {
   run('cargo', 'install', 'cargo-3pl', '--force');
 
   // TODO pass features
-  const thirdPartyLicenses = capture('cargo', '3pl');
+  const thirdPartyLicenses = capture('cargo', '3pl', '--target', target, '--require-files');
   fs.appendFileSync(thirdPartyPath, thirdPartyLicenses);
 }
 
