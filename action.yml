@@ -15,5 +15,5 @@ inputs:
   manual-licenses-path:
     description: Set manual licenses path
 runs:
-  using: node16
+  using: node20
   main: index.js

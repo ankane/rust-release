@@ -18,8 +18,8 @@ jobs:
           os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/cache@v3
+    - uses: actions/checkout@v4
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/bin/
@@ -33,7 +33,7 @@ jobs:
         target: ${{ matrix.target }}
         path: test/hello
       id: rust-release
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.rust-release.outputs.artifact-name }}
         path: ${{ steps.rust-release.outputs.artifact-path }}
