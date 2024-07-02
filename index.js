@@ -128,8 +128,14 @@ if (package.dependencies.length > 0) {
   // TODO use binary
   run('cargo', 'install', 'cargo-3pl', '--force');
 
+  const extraArgs = [];
+  let manualLicensesSource = process.env['INPUT_MANUAL-LICENSES-SOURCE'];
+  if (manualLicensesSource) {
+    extraArgs.push('--source', manualLicensesSource);
+  }
+
   // TODO pass features
-  const thirdPartyLicenses = capture('cargo', '3pl', '--target', target, '--require-files');
+  const thirdPartyLicenses = capture('cargo', '3pl', '--target', target, '--require-files', ...extraArgs);
   fs.appendFileSync(thirdPartyPath, thirdPartyLicenses);
 }
 

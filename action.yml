@@ -14,6 +14,8 @@ inputs:
     description: Set files
   manual-licenses-path:
     description: Set manual licenses path
+  manual-licenses-source:
+    description: Set manual licenses source
 runs:
   using: node20
   main: index.js
